@@ -1,14 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import "./index.css";
 import App from "./App/App";
+import { Provider } from "react-redux";
+import { store } from "./_helpers/store";
 import { history } from "./_helpers/history";
 import * as serviceWorker from "./serviceWorker";
+import "./index.css";
 
 const Root = () => (
   <BrowserRouter history={history}>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </BrowserRouter>
 );
 

@@ -3,12 +3,16 @@ import { Formik } from "formik";
 import { Button } from "../_components/Button";
 import { Header } from "../_components/Header";
 import { Input, InputLabel, InputField, Form } from "../_components/Input";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../_actions/user.actions";
 
-function Register() {
+function Login() {
+  const dispatch = useDispatch();
+
   return (
     <React.Fragment>
       <div className="row">
-        <div className="col-lg-12">
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <Formik
             initialValues={{ email: "", password: "" }}
             validate={values => {
@@ -20,12 +24,7 @@ function Register() {
               }
               return errors;
             }}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
-            }}
+            onSubmit={(values, { setSubmitting }) => dispatch(userActions.login(values))}
           >
             {({
               values,
@@ -40,7 +39,7 @@ function Register() {
               <Form onSubmit={handleSubmit}>
                 <Header>Login</Header>
                 <InputField>
-                  <InputLabel for="email">Email</InputLabel>
+                  <InputLabel htmlFor="email">Email</InputLabel>
                   <Input
                     type="email"
                     name="email"
@@ -52,7 +51,7 @@ function Register() {
                 </InputField>
 
                 <InputField>
-                  <InputLabel for="email">Password</InputLabel>
+                  <InputLabel htmlFor="email">Password</InputLabel>
                   <Input
                     type="password"
                     name="password"
@@ -80,4 +79,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;

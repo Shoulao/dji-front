@@ -11,6 +11,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: 12px;
   padding-left: calc(var(--headerWidth) + 12px);
+  background: var(--neutral-050);
+  overflow: hidden;
 }
 
 :root {
@@ -21,10 +23,17 @@ body {
   --neutral-150: #eee;
   --neutral-200: #eaeaea;
   --neutral-300: #e1e1e1;
+  --neutral-400: #cdcdcd;
+  --neutral-500: #bdbdbd;
+  --neutral-750: #848484;
+  --neutral-800: #747474;
 
   --dark-000: #000;
   --dark-050: #070707;
+  --dark-250: #3e3e3e;
+  --dark-550: #181818;
 
+  --orange: #f24d30;
   --red: #e33112;
   --green: #0de04c;
   --blue: #1ca1f3;

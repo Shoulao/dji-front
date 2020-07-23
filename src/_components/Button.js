@@ -16,6 +16,7 @@ export const Button = styled.button`
   box-shadow: 3px 3px 8px -3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   font-weight: bold;
+  outline: none;
 
   &:hover {
     background-color: ${props => props.backgroundColorHover};

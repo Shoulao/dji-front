@@ -8,11 +8,11 @@ import { ReactComponent as Login } from "../_assets/icons/log-in.svg";
 import { ReactComponent as Register } from "../_assets/icons/password.svg";
 
 export const headerData = [
-  { label: "home", path: "/", icon: Home },
-  { label: "about", path: "/about", icon: About },
-  { label: "manual", path: "/manual", icon: Control },
-  { label: "voice control", path: "/voice-control", icon: Mic },
-  { label: "settings", path: "/settings", icon: Settings },
+  { label: "home", path: "/", icon: Home, disabled: false },
+  { label: "about", path: "/about", icon: About, disabled: true },
+  { label: "manual", path: "/manual", icon: Control, disabled: false },
+  { label: "voice control", path: "/voice-control", icon: Mic, disabled: false },
+  { label: "settings", path: "/settings", icon: Settings, disabled: true },
 ];
 
 export const notAuthData = [

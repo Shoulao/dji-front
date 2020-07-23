@@ -3,9 +3,18 @@ import { Formik } from "formik";
 import { Button } from "../_components/Button";
 import { Header } from "../_components/Header";
 import { Input, InputLabel, InputField, Form } from "../_components/Input";
-import { userService } from "../_services/user.service";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../_actions/user.actions";
 
 function Register() {
+  const registering = useSelector(state => state.registration.registering);
+  const error = useSelector(state => state.registration.error);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(userActions.logout());
+  }, []);
+
   return (
     <React.Fragment>
       <div className="row">
@@ -21,7 +30,7 @@ function Register() {
               }
               return errors;
             }}
-            onSubmit={(values, { setSubmitting }) => userService.register(values)}
+            onSubmit={(values, { setSubmitting }) => dispatch(userActions.register(values))}
           >
             {({
               values,
@@ -36,7 +45,7 @@ function Register() {
               <Form onSubmit={handleSubmit}>
                 <Header>Register</Header>
                 <InputField>
-                  <InputLabel for="email">Email</InputLabel>
+                  <InputLabel htmlFor="email">Email</InputLabel>
                   <Input
                     type="email"
                     name="email"
@@ -46,9 +55,8 @@ function Register() {
                   />
                   {errors.email && touched.email && errors.email}
                 </InputField>
-
                 <InputField>
-                  <InputLabel for="email">Username</InputLabel>
+                  <InputLabel htmlFor="email">Username</InputLabel>
                   <Input
                     type="text"
                     name="username"
@@ -58,9 +66,8 @@ function Register() {
                   />
                   {errors.username && touched.username && errors.username}
                 </InputField>
-
                 <InputField>
-                  <InputLabel for="email">Password</InputLabel>
+                  <InputLabel htmlFor="email">Password</InputLabel>
                   <Input
                     type="password"
                     name="password"
@@ -79,6 +86,8 @@ function Register() {
                 >
                   Submit
                 </Button>
+                {error ? error : null}
+                {registering && <span>Registration in progress...</span>}
               </Form>
             )}
           </Formik>

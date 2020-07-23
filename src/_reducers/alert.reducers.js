@@ -1,6 +1,6 @@
 import * as types from "../_constans/alert.const";
 
-export function alert(state = {}, action) {
+export default function alert(state = {}, action) {
   switch (action.type) {
     case types.SUCCESS:
       return {

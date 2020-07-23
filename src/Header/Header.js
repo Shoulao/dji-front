@@ -1,16 +1,18 @@
 import React from "react";
 import logo from "../_assets/drone/drone-prof.png";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router";
 import { headerData, notAuthData } from "./data";
+import { ReactComponent as LogoIcon } from "../_assets/icons/logo.svg";
 import styled from "@emotion/styled";
 
 function Header() {
   const [menuCollection, setMenuCollection] = React.useState(notAuthData);
-  const isUserAuth = true;
+  const isUserAuth = useSelector(state => state.authentication?.loggedIn);
 
   React.useEffect(() => {
-    if (isUserAuth) {
+    if (!isUserAuth) {
       setMenuCollection(headerData);
     }
   }, [isUserAuth]);
@@ -19,11 +21,17 @@ function Header() {
     <HeaderContainer>
       <Wrapper>
         <Logo>
-          <img src={logo} alt="" className="logo_img" />
+          <LogoIcon className="logo_img" />
         </Logo>
         <Menu>
-          {menuCollection.map(element => (
-            <NavLink className="menu_item" to={element.path} exact={true} activeClassName="active">
+          {menuCollection.map((element, i) => (
+            <NavLink
+              className={element.disabled ? "menu_item disabled-link" : "menu_item "}
+              to={element.path}
+              exact={true}
+              activeClassName="active"
+              key={element.path}
+            >
               <element.icon className="menu_icon" />
               <p className="menu_label">{element.label}</p>
             </NavLink>
@@ -38,18 +46,16 @@ function Header() {
 const HeaderContainer = styled.header`
   height: var(--headerHeight);
   width: var(--headerWidth);
-  background: transparent;
+  background: white;
   position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
-  box-shadow: 3px 3px 8px -3px var(--neutral-300);
+  box-shadow: 3px 3px 4px -3px var(--neutral-300);
 `;
 
 const Wrapper = styled.div`
   height: var(--headerHeight);
-  width: var(--headerWidth);
-  background: transparent;
   padding: 20px 12px;
   display: flex;
   flex-direction: column;
@@ -65,7 +71,9 @@ const Logo = styled.div`
   align-items: center;
 
   .logo_img {
-    width: 60px;
+    width: 30px;
+    opacity: 0.8;
+    height: auto;
     user-select: none;
   }
 `;
@@ -86,22 +94,13 @@ const Menu = styled.div`
     color: var(--dark-000);
     padding: 5px;
 
+    &.disabled-link {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
     &.active {
-      :nth-of-type(1) {
-        color: var(--red);
-      }
-      :nth-of-type(2) {
-        color: var(--green);
-      }
-      :nth-of-type(3) {
-        color: var(--blue);
-      }
-      :nth-of-type(4) {
-        color: var(--yellow);
-      }
-      :nth-of-type(5) {
-        color: var(--purple);
-      }
+      color: var(--blue);
     }
 
     .menu_label {
@@ -124,6 +123,9 @@ const Info = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
+  font-size: 10px;
+  color: var(--neutral-500);
 `;
 
 export default withRouter(Header);
