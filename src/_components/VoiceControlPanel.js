@@ -38,7 +38,7 @@ export default function VoiceControlPanel() {
           backgroundColorHover="#e33112"
           textColor="#fff"
           onClick={() => {
-            // initVoiceCommand(transcript);
+            initVoiceCommand(transcript);
             SpeechRecognition.stopListening();
             setSpeaking(false);
           }}

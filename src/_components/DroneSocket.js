@@ -12,6 +12,16 @@ function useDroneState() {
   return droneState;
 }
 
+function useSpeedTest() {
+  const [droneSpeed, updateDroneSpeed] = React.useState(10);
+
+  React.useEffect(() => {
+    socket.on("speed", updateDroneSpeed);
+  }, []);
+
+  return droneSpeed;
+}
+
 function useSocket() {
   const [status, updateStatus] = React.useState("DISCONNECTED");
 
@@ -25,6 +35,7 @@ function useSocket() {
 function DroneStatus() {
   const status = useSocket();
   const droneState = useDroneState([]);
+  const speed = useSpeedTest();
   console.log(droneState);
 
   const returnPixelHeight = h => {
@@ -39,18 +50,37 @@ function DroneStatus() {
       </StatusElement>
 
       <StatusElement>
+        <StatusLabel>fly time</StatusLabel>
+        <StatusIndicator status={status} />
+      </StatusElement>
+
+      <StatusElement>
         <StatusLabel>battery</StatusLabel>
         <BatteryWrapper>
-          {droneState.bat ? <Battery batStatus={droneState.bat} /> : "no data"}
+          {droneState.bat ? (
+            <Battery batStatus={droneState.bat} />
+          ) : (
+            <NoDataText>No data</NoDataText>
+          )}
         </BatteryWrapper>
       </StatusElement>
 
       <StatusElement>
         <StatusLabel>temperature</StatusLabel>
-        <TemperatureWrapper>
-          <TemperatureIndicator temp={droneState.templ} />
-          <TemperatureText>{droneState.templ ? droneState.templ : "60"}</TemperatureText>
-        </TemperatureWrapper>
+        <CounterWrapper>
+          <CounterIndicator value={droneState.templ} />
+          <CounterText>
+            {droneState.templ ? droneState.templ : <NoDataText>No data</NoDataText>}
+          </CounterText>
+        </CounterWrapper>
+      </StatusElement>
+
+      <StatusElement>
+        <StatusLabel>speed</StatusLabel>
+        <CounterWrapper>
+          <CounterIndicator value={(speed - 10) * 2} />
+          <CounterText>{speed ? speed - 10 : <NoDataText>No data</NoDataText>}</CounterText>
+        </CounterWrapper>
       </StatusElement>
 
       <StatusElement>
@@ -62,6 +92,12 @@ function DroneStatus() {
     </StatusContainer>
   );
 }
+const NoDataText = styled.span`
+  font-weight: bold;
+  font-size: 10px;
+  margin: 0 auto;
+  color: var(--red);
+`;
 
 const StatusContainer = styled.div`
   display: flex;
@@ -138,7 +174,7 @@ const Battery = styled.div`
   width: ${props => props.batStatus}%;
 `;
 
-const TemperatureWrapper = styled.div`
+const CounterWrapper = styled.div`
   display: flex;
   width: 60px;
   height: 30px;
@@ -152,19 +188,19 @@ const TemperatureWrapper = styled.div`
 
 const transformRotate = t => `rotate(${t}deg)`;
 
-const TemperatureIndicator = styled.div`
+const CounterIndicator = styled.div`
   position: absolute;
   transition: all 0.3s ease;
   bottom: 0;
   left: 0;
   width: 30px;
-  transform: translateX(-2px) ${props => transformRotate(props.temp)};
+  transform: translateX(-2px) ${props => transformRotate(props.value)};
   height: 2px;
   background: var(--dark-050);
   transform-origin: 100% 50%;
 `;
 
-const TemperatureText = styled.div`
+const CounterText = styled.div`
   display: flex;
   width: 50px;
   height: 20px;

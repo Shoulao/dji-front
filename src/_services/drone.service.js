@@ -17,15 +17,18 @@ export const initVoiceCommand = transcript => {
     body: JSON.stringify({ command: message }),
   };
 
-  return fetch(`${config.apiUrl}${endpoints.voiceCommand}`, requestOptions)
-    .then(handleResponse)
-    .then(data => {
-      if (data.status === 201) {
-        console.log("Command sent - ok!");
-        console.log("Command: " + data.com);
-      } else {
-        console.log("ERROR: something went wrong.");
-      }
-    })
-    .catch(err => console.log(err));
+  if (transcript.toLowerCase() === "start") {
+    console.log("test");
+    return fetch(`${config.apiUrl}${endpoints.voiceCommand}`, requestOptions)
+      .then(handleResponse)
+      .then(data => {
+        if (data.status === 201) {
+          console.log("Command sent - ok!");
+          console.log("Command: " + data.com);
+        } else {
+          console.log("ERROR: something went wrong.");
+        }
+      })
+      .catch(err => console.log(err));
+  }
 };

@@ -55,7 +55,7 @@ const ControlElement = styled.button`
   justify-content: center;
   padding: 10px;
   border: none;
-  box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 12px -3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   font-size: 10px;
   font-weight: bold;

@@ -118,6 +118,7 @@ const KeyCapCombined = styled.button`
   background: var(--neutral-800);
   border-radius: 5px;
   font-size: 10px;
+  box-shadow: 2px 2px 12px -3px rgba(0, 0, 0, 0.3);
 
   ::before {
     display: block;
@@ -149,7 +150,7 @@ const KeyCap = styled.button`
   font-weight: bold;
   font-size: 10px;
   transition: all 0.2s ease;
-
+  box-shadow: 2px 2px 8px -3px rgba(0, 0, 0, 0.3);
   .key_icon {
     width: 40px;
     height: auto;
@@ -174,6 +175,7 @@ const KeyCap = styled.button`
       right: 0;
       left: 0;
       bottom: 0;
+      border-radius: 3px;
       background: repeating-linear-gradient(
         45deg,
         var(--dark-050) 25%,
@@ -181,7 +183,7 @@ const KeyCap = styled.button`
         transparent 30%
       );
 
-      opacity: 0.7;
+      opacity: 0.2;
     }
   }
 
@@ -192,6 +194,7 @@ const KeyCap = styled.button`
       content: "";
       position: absolute;
       display: block;
+      border-radius: 3px;
       top: 0;
       right: 0;
       left: 0;
@@ -203,7 +206,7 @@ const KeyCap = styled.button`
         transparent 30%
       );
 
-      opacity: 0.7;
+      opacity: 0.2;
     }
   }
 
